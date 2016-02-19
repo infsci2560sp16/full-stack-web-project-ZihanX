@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
     $('a.page-scroll').bind('click', function(event) {
@@ -18,3 +19,4 @@ $('body').scrollspy({
 $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
+/* jshint ignore:end */
