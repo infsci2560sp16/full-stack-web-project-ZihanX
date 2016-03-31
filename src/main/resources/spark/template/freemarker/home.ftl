@@ -58,18 +58,53 @@
       Do you want a Chinese stamper with your own Chinese name on it?</p>
     	<a href="#Stamper Up!!!" class="smoothScroll btn btn-lg">Stamper Up!!!</a> </header>
     	<a href="#Custom One by Designers" class="smoothScroll btn btn-lg">Custom One by Designers</a> </header>
-
+    	
 </div>
+
+	`<div class="col-md-4 sap">
+				<h3>Universities</h3>
+				<div class="cur-right" id="peoples">
+						
+		</div>
+	</div>
 <!-- /headerwrap -->
 
 
 
 <!-- container -->
 
-<div id="footerwrap">
+<div id="footerwrap" style="background-color:#f6efe9">
   <div class="container">
+    <div class="col-md-4 amet-sed " style="background-color:#f6efe9">
+				<h4>Connect Information</h4>
+				<p><a href="#">${contact}</a></p>
+				<p>						
+					<#if contact=="Contact Information">
+						This is my contact information
+					<#elseif contact=="Information">
+						This is contact information
+					<#else>
+						No information
+					</#if>
+				<p>		
+				
+				<button id="get-info-btn">Show contact information</button>
+				<ul class="social-in" id="my-info" style="list-style:none;">
+				</ul>
+				</div>
+				<div style="background-color:#f6efe9">
+					<ul id="list_info">
+					<#list lst as item>
+						<li><a>${item}</a></li>
+					</#list>
+				</ul>
+				</div>
+				<div id="tellUs">
+					<input type="text" name="info" />
+					<button>add</button>
+				</div>
     <div class="row">
-      <div class="col-md-7"> <span class="copyright">Copyright &copy; Zihan Xie (zix8@pitt.edu)</span> </div>
+      <div class="col-md-7"> <span class="copyright" style="margin-left:30px">Copyright &copy; Zihan Xie (zix8@pitt.edu)</span> </div>
       <div class="col-md-5">
         <ul class="list-inline social-buttons">
           <li><a href="#"><i class="fa fa-twitter"></i></a> </li>
@@ -90,5 +125,70 @@
 <script src="https://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="js/smoothscroll.js"></script>
 <script type="text/javascript" src="libs/jquery-func.js"></script>
+ <script>
+  
+  	function getMyInfo() {
+  		var $btn = $("#get-info-btn");
+  		$btn.click(function(){
+  			$.get("/api/my_info", function( data ) {
+			  console.log(data);
+			  var dataJson = JSON.parse(data);
+			  var $container = $('#my-info')
+			  for (var key in dataJson) {
+			  	var $li = $('<li>');
+			  	$li.html(dataJson[key]);
+			  	$container.append($li);
+			  }
+			  $btn.hide();
+			  
+			});
+  		})
+  	}
+  	
+  	function addMusicInfo() {
+  		var $container = $('#tellUs');
+  		var $btn = $container.find('button');
+  		var $input = $container.find('input');
+
+  		$btn.click(function(){
+	  		$.post( "/api/add_tell_us", { info: $input.val()})
+			  .done(function( data ) {
+			    data = JSON.parse(data);
+			    $('#list_info').append('<li><a>'+ data.info +'</a></li>')
+			  });
+	  			
+	  		})
+  	}
+  	
+  	function getPeoplesInfo() {
+  		var $container = $('#peoples');
+  		console.log('get');
+  		$.get( "/api/peoples", function( xml ) {
+  	      var $xml = $(xml);
+  	      var $peoples = $xml.find('people');
+		  $.each( $peoples, function() {
+			console.log(this);
+		  	var $product = $('<div class="product">');
+		  	var $a = $('<a href="#" class="fashion">');
+		  	$product.append($a);
+		  	
+		  	var $grid = $('<div class="grid-product">');
+		  	var $p = $('<p>'+ $(this).find('name').html() +'</p>');
+		  	$grid.append($p);
+		  	$product.append($grid);
+		  	$product.append($('<div class="clearfix">'));
+		  	
+		  	
+		  	
+		  	$container.append($product);
+		  });
+
+		});
+  	}
+  	
+  	getMyInfo();
+  	addMusicInfo();
+  	getPeoplesInfo();
+  </script>
 </body>
 </html>
