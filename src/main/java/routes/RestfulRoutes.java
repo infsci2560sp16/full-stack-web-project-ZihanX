@@ -33,7 +33,7 @@ import static spark.Spark.post;
 
 /**
  *
- * @author xin zhao
+ * @author Zihan Xie
  */
 public class RestfulRoutes {
 
