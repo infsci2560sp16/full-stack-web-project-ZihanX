@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<peoples>
+	<people>
+	  <name>Singers</name>
+	  <img>images/images.jpeg</img>
+	</people>
+	<people>
+	  <name>Band</name>
+	  <img>images/coldplay.jpg</img>
+	</people>
+	<people>
+	  <name>Producer</name>
+	  <img>images/producer.jpg</img>
+	</people>
+</peoples>
